@@ -27,13 +27,13 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdk 34
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
@@ -49,5 +49,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // ZENDESK
-    implementation group: 'com.zendesk', name: 'support', version: '5.4.0'
+    implementation 'com.zendesk:support:5.2.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 }

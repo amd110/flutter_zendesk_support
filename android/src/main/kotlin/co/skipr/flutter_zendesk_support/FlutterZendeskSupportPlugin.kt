@@ -70,14 +70,14 @@ class FlutterZendeskSupportPlugin(private val registrar: Registrar) : MethodCall
         var helpCenter = HelpCenterActivity.builder()
 
         val groupType = call.argument<String?>("groupType")
-        val groupIds = call.argument<List<Long>?>("groupIds")
+        val groupIds: List<Long> = call.argument<List<Long>?>("groupIds")
 
         when(groupType) {
           "category" -> {
-            helpCenter = helpCenter.withArticlesForCategoryIds(groupIds!!)
+            helpCenter = helpCenter.withArticlesForCategoryIds(groupIds)
           }
           "section" -> {
-            helpCenter = helpCenter.withArticlesForSectionIds(groupIds!!)
+            helpCenter = helpCenter.withArticlesForSectionIds(groupIds)
           }
         }
 
@@ -88,7 +88,7 @@ class FlutterZendeskSupportPlugin(private val registrar: Registrar) : MethodCall
       "openTicket" -> {
         val id = call.argument<String>("id")
         val title = call.argument<String?>("title")
-        val tags = call.argument<List<String>?>("tags")
+        val tags: List<String>? = call.argument<List<String>?>("tags")
 
         var builder = RequestActivity.builder()
 
@@ -98,6 +98,7 @@ class FlutterZendeskSupportPlugin(private val registrar: Registrar) : MethodCall
           builder = builder.withRequestSubject(title)
         if (tags != null)
           builder = builder.withTags(tags)
+
 
         builder.show(registrar.activeContext())
       }
