@@ -52,15 +52,13 @@ class FlutterZendeskSupportPlugin(private val registrar: Registrar) : MethodCall
         val token = call.argument<String?>("token")
         val name = call.argument<String?>("name")
         val email = call.argument<String?>("email")
-
-        val identity : Identity
-        if (token != null) {
-          identity = JwtIdentity(token)
+        val identity : Identity = if (token != null) {
+          JwtIdentity(token)
         } else {
-          identity = AnonymousIdentity.Builder()
-            .withNameIdentifier(name)
-            .withEmailIdentifier(email)
-            .build()
+          AnonymousIdentity.Builder()
+                .withNameIdentifier(name)
+                .withEmailIdentifier(email)
+                .build()
         }
         Zendesk.INSTANCE.setIdentity(identity)
 
@@ -70,14 +68,14 @@ class FlutterZendeskSupportPlugin(private val registrar: Registrar) : MethodCall
         var helpCenter = HelpCenterActivity.builder()
 
         val groupType = call.argument<String?>("groupType")
-        val groupIds: List<Long> = call.argument<List<Long>?>("groupIds")
+        val groupIds: List<Long>? = call.argument<List<Long>?>("groupIds")
 
         when(groupType) {
           "category" -> {
-            helpCenter = helpCenter.withArticlesForCategoryIds(groupIds)
+            helpCenter = helpCenter.withArticlesForCategoryIds(groupIds!!)
           }
           "section" -> {
-            helpCenter = helpCenter.withArticlesForSectionIds(groupIds)
+            helpCenter = helpCenter.withArticlesForSectionIds(groupIds!!)
           }
         }
 
